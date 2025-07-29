@@ -1,4 +1,4 @@
-function welcome(name:string){
+function welcome(name: string) {
     console.log(`Welcome, ${name}!`);
 }
 
