@@ -1,11 +1,14 @@
 import express, { NextFunction, Request, Response } from 'express';
 import logger from './config/logger';
 import { HttpError } from 'http-errors';
+import authRouter from './routes/auth';
 const app = express();
 
 app.get('/', (req, res) => {
     return res.send('Auth Service is running');
 });
+
+app.use('/auth', authRouter);
 
 // Global error handler, This should be the last middleware to catch errors
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
