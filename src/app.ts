@@ -5,6 +5,7 @@ import authRouter from './routes/auth';
 import 'reflect-metadata';
 
 const app = express();
+app.use(express.json());
 
 app.get('/', (req, res) => {
     return res.send('Auth Service is running');
