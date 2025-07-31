@@ -80,7 +80,6 @@ describe('POST /auth/register', () => {
             const userRepository = connection.getRepository(User);
             const users = await userRepository.find();
             expect(users).toHaveLength(1);
-            expect(users[0]).toMatchObject(userData);
             expect(users[0].firstName).toBe('Harshita');
             expect(users[0].lastName).toBe('Gupta');
             expect(users[0].email).toBe('gupta@gmail.com');
@@ -118,9 +117,52 @@ describe('POST /auth/register', () => {
 
             // Assert
             const userRepository = connection.getRepository(User);
-            const user = await userRepository.find();
-            expect(user[0]).toHaveProperty('role');
-            expect(user[0].role).toBe(Roles.CUSTOMER);
+            const users = await userRepository.find();
+            expect(users[0]).toHaveProperty('role');
+            expect(users[0].role).toBe(Roles.CUSTOMER);
+        });
+
+        it('should store the hashed password in the satabase', async () => {
+            // Arrange
+            const userData = {
+                firstName: 'Harshita',
+                lastName: 'Gupta',
+                email: 'guptaharshita@gmail.com',
+                password: 'password231',
+            };
+
+            // Act
+            await request(app).post('/auth/register').send(userData);
+
+            // Assert
+            const userRepository = connection.getRepository(User);
+            const users = await userRepository.find();
+            expect(users[0]).toHaveProperty('password');
+            expect(users[0].password).not.toBe('password231');
+            expect(users[0].password).toHaveLength(60);
+            expect(users[0].password).toMatch(/^\$2b\$\d+\$/);
+        });
+
+        it('should return 404 status code, if email is already exists', async () => {
+            // Arrange
+            const userData = {
+                firstName: 'Harshita',
+                lastName: 'Gupta',
+                email: 'guptaharshita@gmail.com',
+                password: 'password231',
+            };
+            const userRepository = connection.getRepository(User);
+            await userRepository.save({ ...userData, role: Roles.CUSTOMER });
+
+            // Act
+            const response = await request(app)
+                .post('/auth/register')
+                .send(userData);
+            const users = await userRepository.find();
+
+            // Assert
+            expect(response.statusCode).toBe(400);
+            expect(users).toHaveLength(1);
         });
     });
 
