@@ -168,24 +168,24 @@ describe('POST /auth/register', () => {
 
     // Sad path tests
 
-    describe.skip('Fields are missing', () => {
-        it('should return 400 status code', async () => {
+    describe('Fields are missing', () => {
+        it('should return 400 status code if email field is missing', async () => {
             // Arrange
             const userData = {
                 firstName: 'Harshita',
                 lastName: 'Gupta',
-                email: 'gupta@gmail.com',
-                // password is missing
+                password: 'password123',
             };
             // Act
             const response = await request(app)
                 .post('/auth/register')
                 .send(userData);
+            const userRepository = connection.getRepository(User);
+            const users = await userRepository.find();
+
             // Assert
             expect(response.statusCode).toBe(400);
-            // expect(response.body).toEqual({
-            //     error: 'Password is required'
-            // });
+            expect(users).toHaveLength(0);
         });
     });
 });
