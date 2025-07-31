@@ -10,10 +10,7 @@ export const AppDataSource = new DataSource({
     username: Config.DB_USERNAME,
     password: Config.DB_PASSWORD,
     database: Config.DB_NAME,
-    // don't use this in production, it's just for development
-    // synchronize: true will drop and recreate the database schema on every application launch
-    // use migrations in production instead
-    synchronize: Config.NODE_ENV == 'test' || Config.NODE_ENV == 'dev',
+    synchronize: false,
     logging: false,
     entities: [User],
     migrations: [],

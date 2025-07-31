@@ -2,8 +2,8 @@ import request from 'supertest';
 import app from '../../src/app';
 import { DataSource } from 'typeorm';
 import { AppDataSource } from '../../src/config/data-source';
-import { truncateTables } from './utils';
 import { User } from '../../src/entity/User';
+import { Roles } from '../../src/constants';
 
 describe('POST /auth/register', () => {
     let connection: DataSource;
@@ -16,7 +16,8 @@ describe('POST /auth/register', () => {
         // Clear the database before each test
         // This will ensure that each test starts with a clean slate
         // and does not depend on the state left by previous tests
-        await truncateTables(connection);
+        await connection.dropDatabase();
+        await connection.synchronize();
     });
 
     afterAll(async () => {
@@ -101,6 +102,25 @@ describe('POST /auth/register', () => {
 
             // Assert
             expect(response.body).toHaveProperty('id');
+        });
+
+        it('should assign a customer role to the user', async () => {
+            // Arrange
+            const userData = {
+                firstName: 'Harshita',
+                lastName: 'Gupta',
+                email: 'guptaharshita20@gmail.com',
+                password: 'password231',
+            };
+
+            // Act
+            await request(app).post('/auth/register').send(userData);
+
+            // Assert
+            const userRepository = connection.getRepository(User);
+            const user = await userRepository.find();
+            expect(user[0]).toHaveProperty('role');
+            expect(user[0].role).toBe(Roles.CUSTOMER);
         });
     });
 
