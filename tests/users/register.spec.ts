@@ -84,6 +84,24 @@ describe('POST /auth/register', () => {
             expect(users[0].lastName).toBe('Gupta');
             expect(users[0].email).toBe('gupta@gmail.com');
         });
+
+        it('should return an id of the created user', async () => {
+            // Arrange
+            const userData = {
+                firstName: 'Harshita',
+                lastName: 'Gupta',
+                email: 'guptaharshita20@gmail.com',
+                password: 'password231',
+            };
+
+            // Act
+            const response = await request(app)
+                .post('/auth/register')
+                .send(userData);
+
+            // Assert
+            expect(response.body).toHaveProperty('id');
+        });
     });
 
     // Sad path tests
