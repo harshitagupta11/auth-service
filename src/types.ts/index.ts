@@ -10,4 +10,14 @@ interface RegisterRequestBody extends Request {
     body: userData;
 }
 
-export { RegisterRequestBody, userData };
+interface AuthRequest extends Request {
+    auth: {
+        sub: string;
+        role: string;
+    };
+}
+type Authcookie = {
+    accessToken: string;
+};
+
+export { RegisterRequestBody, userData, AuthRequest, Authcookie };
