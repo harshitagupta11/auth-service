@@ -1,19 +1,26 @@
 import app from './app';
 import { Config } from './config';
+import { AppDataSource } from './config/data-source';
 import logger from './config/logger';
 
 console.log('Server is running on port', Config.PORT);
 
-const startServer = () => {
+const startServer = async () => {
     const PORT = Config.PORT;
     try {
+        await AppDataSource.initialize();
+        logger.info('Database connected successfully.');
         app.listen(PORT, () => {
             logger.info(`Server is running on port, ${PORT}`);
         });
-    } catch (error) {
-        console.error('Error starting server:', error);
-        process.exit(1);
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            logger.error(error.message);
+            setTimeout(() => {
+                process.exit(1);
+            }, 1000);
+        }
     }
 };
 
-startServer();
+void startServer();
