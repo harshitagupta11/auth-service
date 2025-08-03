@@ -7,6 +7,10 @@ import 'reflect-metadata';
 import cookieParser from 'cookie-parser';
 
 const app = express();
+
+// Serve static files from the 'public' directory
+app.use(express.static('public', { dotfiles: 'allow' }));
+
 app.use(cookieParser());
 app.use(express.json());
 
@@ -20,7 +24,7 @@ app.use('/auth', authRouter);
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use((err: HttpError, req: Request, res: Response, next: NextFunction) => {
     logger.error('Global error handler:', err.message);
-    const statusCode = err.status || 500;
+    const statusCode = err.statusCode || err.status || 500;
     res.status(statusCode).json({
         errors: [
             {

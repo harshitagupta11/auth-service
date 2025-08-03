@@ -106,5 +106,14 @@ describe('GET /auth/self', () => {
                 'password',
             );
         });
+
+        it('should return 401 status code if token not exist', async () => {
+            const response = await request(app).get('/auth/self').send();
+
+            // Assert
+
+            // check is user id matches with registered user
+            expect(response.statusCode).toBe(401);
+        });
     });
 });
