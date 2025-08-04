@@ -14,10 +14,22 @@ interface AuthRequest extends Request {
     auth: {
         sub: string;
         role: string;
+        id?: string;
     };
 }
 type Authcookie = {
     accessToken: string;
+    refreshToken: string;
 };
 
-export { RegisterRequestBody, userData, AuthRequest, Authcookie };
+interface IRefreshTokenPayload {
+    id: string;
+}
+
+export {
+    RegisterRequestBody,
+    userData,
+    AuthRequest,
+    Authcookie,
+    IRefreshTokenPayload,
+};
