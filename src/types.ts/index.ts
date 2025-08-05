@@ -26,10 +26,19 @@ interface IRefreshTokenPayload {
     id: string;
 }
 
+interface ITenant {
+    name: string;
+    address: string;
+}
+interface TenanatRequestBody extends Request {
+    body: ITenant;
+}
 export {
     RegisterRequestBody,
     userData,
     AuthRequest,
     Authcookie,
     IRefreshTokenPayload,
+    ITenant,
+    TenanatRequestBody,
 };
