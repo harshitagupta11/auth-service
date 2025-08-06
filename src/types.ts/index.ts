@@ -5,6 +5,7 @@ interface userData {
     lastName: string;
     email: string;
     password: string;
+    role: string;
 }
 interface RegisterRequestBody extends Request {
     body: userData;
@@ -33,6 +34,9 @@ interface ITenant {
 interface TenanatRequestBody extends Request {
     body: ITenant;
 }
+interface CreateUserRequestBody extends Request {
+    body: userData;
+}
 export {
     RegisterRequestBody,
     userData,
@@ -41,4 +45,5 @@ export {
     IRefreshTokenPayload,
     ITenant,
     TenanatRequestBody,
+    CreateUserRequestBody,
 };

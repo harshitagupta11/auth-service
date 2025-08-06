@@ -4,9 +4,10 @@ import { UserService } from '../services/userService';
 import { Logger } from 'winston';
 import { validationResult } from 'express-validator';
 import { JwtPayload } from 'jsonwebtoken';
-import { TokenService } from '../services/tokenService.js';
+import { TokenService } from '../services/tokenService';
 import createHttpError from 'http-errors';
-import { CredentialService } from '../services/credentialService.js';
+import { CredentialService } from '../services/credentialService';
+import { Roles } from '../constants/index';
 export class AuthController {
     userService: UserService;
 
@@ -45,6 +46,7 @@ export class AuthController {
                 lastName,
                 email,
                 password,
+                role: Roles.CUSTOMER,
             });
             this.logger.info('User has been registered successfully', {
                 id: user.id,
