@@ -6,6 +6,7 @@ import { User } from '../../src/entity/User';
 import { Roles } from '../../src/constants';
 import createJWKSMock from 'mock-jwks';
 import { Tenant } from '../../src/entity/Tenants';
+import { createTenant } from './utils';
 
 describe('POST, /auth/users', () => {
     let connection: DataSource;
@@ -36,10 +37,7 @@ describe('POST, /auth/users', () => {
         it('should persist the user in the database', async () => {
             // Create tenant first
             const tenantRepository = connection.getRepository(Tenant);
-            const tenant = await tenantRepository.save({
-                name: 'Test tenant',
-                address: 'Test address',
-            });
+            const tenant = await createTenant(tenantRepository);
             const userData = {
                 firstName: 'Harshita',
                 lastName: 'Gupta',
@@ -68,11 +66,7 @@ describe('POST, /auth/users', () => {
         it('should create manager user', async () => {
             // Create tenant
             const tenantRepository = connection.getRepository(Tenant);
-            const tenant = await tenantRepository.save({
-                name: 'Test tenant',
-                address: 'Test address',
-            });
-
+            const tenant = await createTenant(tenantRepository);
             const userData = {
                 firstName: 'Harshita',
                 lastName: 'Gupta',
@@ -98,6 +92,8 @@ describe('POST, /auth/users', () => {
             expect(users[0].role).toBe(Roles.MANAGER);
         });
         it('should return 403 if non admin user tries to create a user', async () => {
+            //  create a tenant first
+            const tenant = await createTenant(connection.getRepository(Tenant));
             const nonAdminToken = jwks.token({
                 sub: '1',
                 role: Roles.MANAGER,
@@ -108,7 +104,7 @@ describe('POST, /auth/users', () => {
                 lastName: 'Gupta',
                 email: 'gupta@gmail.com',
                 password: 'password123',
-                tenantId: 1,
+                tenantId: tenant.id,
             };
 
             // Add token to cookie
