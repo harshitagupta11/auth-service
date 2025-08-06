@@ -75,4 +75,24 @@ export class UserController {
             return;
         }
     }
+    async get(req: Request, res: Response, next: NextFunction) {
+        const userId = req.params.id;
+
+        if (isNaN(Number(userId))) {
+            next(createHttpError(400, 'Invalid url param.'));
+            return;
+        }
+
+        this.logger.debug('Request for updating a user', req.body);
+
+        try {
+            await this.userService.findById(Number(userId));
+
+            this.logger.info('User has been fetched', { id: userId });
+
+            res.json({ id: Number(userId) });
+        } catch (err) {
+            next(err);
+        }
+    }
 }
