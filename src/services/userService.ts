@@ -1,6 +1,6 @@
 import { Repository } from 'typeorm';
 import { User } from '../entity/User';
-import { userData } from '../types.ts';
+import { LimitedUserData, userData } from '../types.ts';
 import createHttpError from 'http-errors';
 import bcrypt from 'bcrypt';
 
@@ -33,12 +33,44 @@ export class UserService {
         }
     }
 
-    async findByEmail(email: string) {
-        const user = await this.userRepository.findOne({ where: { email } });
+    async findByEmailWithPassword(email: string) {
+        const user = await this.userRepository.findOne({
+            where: { email },
+            select: [
+                'id',
+                'firstName',
+                'lastName',
+                'email',
+                'password',
+                'role',
+            ],
+        });
         return user;
     }
 
     async findById(id: number) {
         return await this.userRepository.findOne({ where: { id } });
+    }
+
+    async update(
+        userId: number,
+        { firstName, lastName, role }: LimitedUserData,
+    ) {
+        try {
+            return await this.userRepository.update(userId, {
+                firstName,
+                lastName,
+                role,
+            });
+        } catch {
+            const error = createHttpError(
+                500,
+                'Failed to update the user in the database',
+            );
+            throw error;
+        }
+    }
+    async getAll() {
+        return await this.userRepository.find();
     }
 }

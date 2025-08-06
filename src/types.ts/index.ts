@@ -37,6 +37,12 @@ interface TenanatRequestBody extends Request {
 interface CreateUserRequestBody extends Request {
     body: userData;
 }
+
+interface LimitedUserData {
+    firstName: string;
+    lastName: string;
+    role: string;
+}
 export {
     RegisterRequestBody,
     userData,
@@ -46,4 +52,5 @@ export {
     ITenant,
     TenanatRequestBody,
     CreateUserRequestBody,
+    LimitedUserData,
 };
