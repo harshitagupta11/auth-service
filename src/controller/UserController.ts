@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { Logger } from 'winston';
 import { UserService } from '../services/userService';
-import { CreateUserRequestBody } from '../types.ts';
+import { CreateUserRequestBody, UpdateUserRequest } from '../types.ts';
 import { Roles } from '../constants';
 import createHttpError from 'http-errors';
 import { validationResult } from 'express-validator';
@@ -39,11 +39,7 @@ export class UserController {
             return;
         }
     }
-    async update(
-        req: CreateUserRequestBody,
-        res: Response,
-        next: NextFunction,
-    ) {
+    async update(req: UpdateUserRequest, res: Response, next: NextFunction) {
         // Validation
         const result = validationResult(req);
         if (!result.isEmpty()) {

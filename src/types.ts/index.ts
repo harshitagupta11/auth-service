@@ -43,6 +43,10 @@ interface LimitedUserData {
     lastName: string;
     role: string;
 }
+
+interface UpdateUserRequest extends Request {
+    body: LimitedUserData;
+}
 export {
     RegisterRequestBody,
     userData,
@@ -53,4 +57,5 @@ export {
     TenanatRequestBody,
     CreateUserRequestBody,
     LimitedUserData,
+    UpdateUserRequest,
 };
