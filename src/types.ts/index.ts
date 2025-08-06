@@ -6,6 +6,7 @@ interface userData {
     email: string;
     password: string;
     role: string;
+    tenantId?: number;
 }
 interface RegisterRequestBody extends Request {
     body: userData;
