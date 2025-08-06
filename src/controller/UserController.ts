@@ -4,6 +4,7 @@ import { UserService } from '../services/userService';
 import { CreateUserRequestBody } from '../types.ts';
 import { Roles } from '../constants';
 import createHttpError from 'http-errors';
+import { validationResult } from 'express-validator';
 
 export class UserController {
     constructor(
@@ -16,6 +17,12 @@ export class UserController {
         res: Response,
         next: NextFunction,
     ) {
+        // Validation
+        const result = validationResult(req);
+        if (!result.isEmpty()) {
+            return res.status(400).json({ errors: result.array() });
+        }
+
         this.logger.debug('Request for creating a user', req.body);
         const { firstName, lastName, email, password } = req.body;
         try {
@@ -37,6 +44,12 @@ export class UserController {
         res: Response,
         next: NextFunction,
     ) {
+        // Validation
+        const result = validationResult(req);
+        if (!result.isEmpty()) {
+            return res.status(400).json({ errors: result.array() });
+        }
+
         // In our project: We are not allowing user to change the email id since it is used as username
         // In our project: We are not allowing admin user to change others password
 
