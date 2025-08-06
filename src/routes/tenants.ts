@@ -18,4 +18,23 @@ router.post('/', authenticate, canAccess([Roles.ADMIN]), (req, res, next) =>
     tenanatController.create(req, res, next),
 );
 
+router.patch('/:id', authenticate, canAccess([Roles.ADMIN]), (req, res, next) =>
+    tenanatController.update(req, res, next),
+);
+
+router.get('/', authenticate, canAccess([Roles.ADMIN]), (req, res, next) =>
+    tenanatController.getAll(req, res, next),
+);
+
+router.get('/:id', authenticate, canAccess([Roles.ADMIN]), (req, res, next) =>
+    tenanatController.get(req, res, next),
+);
+
+router.delete(
+    '/:id',
+    authenticate,
+    canAccess([Roles.ADMIN]),
+    (req, res, next) => tenanatController.destory(req, res, next),
+);
+
 export default router;
