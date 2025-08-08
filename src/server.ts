@@ -3,7 +3,7 @@ import { Config } from './config';
 import { AppDataSource } from './config/data-source';
 import logger from './config/logger';
 
-console.log('Server is running on port', Config.PORT);
+console.log('Server is runing on port', Config.PORT);
 
 const startServer = async () => {
     const PORT = Config.PORT;
