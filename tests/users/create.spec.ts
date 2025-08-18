@@ -30,7 +30,7 @@ describe('POST, /auth/users', () => {
         jwks.stop();
     });
     afterAll(async () => {
-        await connection.destroy();
+        // await connection.destroy();
     });
 
     describe('Given all fields', () => {

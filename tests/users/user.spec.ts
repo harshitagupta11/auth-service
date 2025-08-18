@@ -28,7 +28,7 @@ describe('GET /auth/self', () => {
         jwks.stop();
     });
     afterAll(async () => {
-        await connection.destroy();
+        // await connection.destroy();
     });
 
     describe('Given all fields', () => {

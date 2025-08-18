@@ -23,7 +23,7 @@ describe('POST /auth/register', () => {
     });
 
     afterAll(async () => {
-        await connection.destroy();
+        // await connection.destroy();
     });
 
     // Happy path test

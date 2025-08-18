@@ -23,7 +23,7 @@ describe('POST /auth/login', () => {
     });
 
     afterAll(async () => {
-        await connection.destroy();
+        // await connection.destroy();
     });
 
     describe('Given all fields', () => {

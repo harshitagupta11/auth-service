@@ -10,10 +10,10 @@ export const AppDataSource = new DataSource({
     // password: Config.DB_PASSWORD,
     // database: Config.DB_NAME,
     url: Config.DB_URL,
-    ssl:
-        process.env.NODE_ENV !== 'dev'
-            ? { rejectUnauthorized: false } // cloud DBs like Heroku need this
-            : false,
+    // ssl:
+    //     process.env.NODE_ENV !== 'dev'
+    //         ? { rejectUnauthorized: false } // cloud DBs like Heroku need this
+    //         : false,
     synchronize: false, // false in production
     logging: false,
     entities: ['src/entity/*.{ts,js}'],
