@@ -13,16 +13,13 @@ const {
     DB_USERNAME,
     DB_PASSWORD,
     DB_NAME,
+    DB_URL,
     REFRESH_TOKEN_SECRET,
     JWKS_URI,
     PRIVATE_KEY,
 } = process.env;
-console.log('PORT:', PORT);
-console.log('DB_HOST:', DB_HOST);
-console.log('DB_PORT:', DB_PORT);
-console.log('DB_USERNAME:', DB_USERNAME);
-console.log('DB_Name:', DB_NAME);
-
+console.log(DB_URL);
+console.log(JWKS_URI);
 export const Config = {
     PORT,
     NODE_ENV,
@@ -31,6 +28,7 @@ export const Config = {
     DB_USERNAME,
     DB_PASSWORD,
     DB_NAME,
+    DB_URL,
     REFRESH_TOKEN_SECRET,
     JWKS_URI,
     PRIVATE_KEY,
