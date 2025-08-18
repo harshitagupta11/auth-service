@@ -18,6 +18,11 @@ const {
     PRIVATE_KEY,
 } = process.env;
 console.log('PORT:', PORT);
+console.log('DB_HOST:', DB_HOST);
+console.log('DB_PORT:', DB_PORT);
+console.log('DB_USERNAME:', DB_USERNAME);
+console.log('DB_Name:', DB_NAME);
+
 export const Config = {
     PORT,
     NODE_ENV,
