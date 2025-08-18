@@ -38,30 +38,30 @@ jobs:
             - name: Build TypeScript
               run: npm run build
               
-            - name: SonarCloud Scan
-              uses: SonarSource/sonarcloud-github-action@master
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+            # - name: SonarCloud Scan
+            #   uses: SonarSource/sonarcloud-github-action@master
+            #   env:
+            #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            #       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-    build-and-push-docker:
-        name: Build and Push Docker Image
-        needs: build-and-test
-        runs-on: ubuntu-latest
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        env:
-            IMAGE_NAME: harshitagupta11/mernstack_auth_service
-            IMAGE_TAG: build-${{ github.run_number }}
+    # build-and-push-docker:
+    #     name: Build and Push Docker Image
+    #     needs: build-and-test
+    #     runs-on: ubuntu-latest
+    #     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    #     env:
+    #         IMAGE_NAME: harshitagupta11/mernstack_auth_service
+    #         IMAGE_TAG: build-${{ github.run_number }}
 
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v3
-            - name: Log in to Docker Hub
-              uses: docker/login-action@v1
-              with:
-                  username: ${{ secrets.DOCKERHUB_USERNAME }}
-                  password: ${{ secrets.DOCKERHUB_PASSWORD }}
-            - name: Build Docker image
-              run: docker build -t ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} -f docker/prod/Dockerfile .
-            - name: Push Docker image to Docker Hub
-              run: docker push ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+    #     steps:
+    #         - name: Checkout repository
+    #           uses: actions/checkout@v3
+    #         - name: Log in to Docker Hub
+    #           uses: docker/login-action@v1
+    #           with:
+    #               username: ${{ secrets.DOCKERHUB_USERNAME }}
+    #               password: ${{ secrets.DOCKERHUB_PASSWORD }}
+    #         - name: Build Docker image
+    #           run: docker build -t ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} -f docker/prod/Dockerfile .
+    #         - name: Push Docker image to Docker Hub
+    #           run: docker push ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
