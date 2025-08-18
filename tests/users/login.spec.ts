@@ -6,12 +6,15 @@ import app from '../../src/app';
 import { isJwt } from './utils';
 import { User } from '../../src/entity/User';
 import { Roles } from '../../src/constants';
+import { Config } from '../../src/config';
 
 describe('POST /auth/login', () => {
     let connection: DataSource;
 
     beforeAll(async () => {
         connection = await AppDataSource.initialize();
+        console.log(Config.DB_HOST, 'db hosts');
+        console.log(connection);
     });
 
     beforeEach(async () => {
