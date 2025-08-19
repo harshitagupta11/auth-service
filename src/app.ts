@@ -4,11 +4,17 @@ import { HttpError } from 'http-errors';
 import authRouter from './routes/auth';
 import tenantRouter from './routes/tenants';
 import userRouter from './routes/users';
-
+import cors from 'cors';
 import 'reflect-metadata';
 import cookieParser from 'cookie-parser';
 
 const app = express();
+app.use(
+    cors({
+        origin: ['http://localhost:5173'],
+        credentials: true,
+    }),
+);
 
 // Serve static files from the 'public' directory
 app.use(express.static('public', { dotfiles: 'allow' }));
