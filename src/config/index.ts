@@ -18,6 +18,7 @@ const {
     JWKS_URI,
     PRIVATE_KEY,
 } = process.env;
+console.log(REFRESH_TOKEN_SECRET, 'REfresh Token secret');
 console.log(DB_URL);
 console.log(JWKS_URI);
 export const Config = {
